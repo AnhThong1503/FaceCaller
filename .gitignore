@@ -1,0 +1,76 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies (client)
+/client/node_modules
+/client/.pnp
+/client.pnp.*
+/client/.yarn/*
+!/client/.yarn/patches
+!/client/.yarn/plugins
+!/client/.yarn/releases
+!/client/.yarn/versions
+
+# testing (client)
+/client/coverage
+
+# next.js (client)
+/client/.next/
+/client/out/
+
+# production (client)
+/client/build
+
+# misc (client and server)
+**/.DS_Store
+**/*.pem
+
+# debug (client)
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+/client/.pnpm-debug.log*
+
+# env files (client - can opt-in for committing if needed)
+/client/.env*
+
+# vercel (client)
+/client/.vercel
+
+# typescript (client)
+/client/*.tsbuildinfo
+/client/next-env.d.ts
+
+# Maven (server)
+HELP.md
+/server/target/
+!/server/.mvn/wrapper/maven-wrapper.jar
+!**/server/src/main/**/target/
+!**/server/src/test/**/target/
+
+### STS ###
+/server/.apt_generated
+/server/.classpath
+/server/.factorypath
+/server/.project
+/server/.settings
+/server/.springBeans
+/server/.sts4-cache
+
+### IntelliJ IDEA ###
+/server/.idea
+/server/*.iws
+/server/*.iml
+/server/*.ipr
+
+### NetBeans ###
+/server/nbproject/private/
+/server/nbbuild/
+/server/dist/
+/server/nbdist/
+/server/.nb-gradle/
+/server/build/
+!**/server/src/main/**/build/
+!**/server/src/test/**/build/
+
+### VS Code ###
+/server/.vscode/
