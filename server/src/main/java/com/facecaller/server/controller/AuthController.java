@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.facecaller.server.dto.RegisterRequest;
+import com.facecaller.server.config.JWTGenerator;
+import com.facecaller.server.dto.AuthResponseDTO;
 import com.facecaller.server.dto.LoginRequest;
 import com.facecaller.server.model.Users;
 import com.facecaller.server.repository.UserRepository;
@@ -28,12 +30,14 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private JWTGenerator jwtGenerator;
 
     public AuthController(AuthenticationManager authenticationManager, UserRepository userRepository,
-                          PasswordEncoder passwordEncoder) {
+                          PasswordEncoder passwordEncoder, JWTGenerator jwtGenerator) {
         this.authenticationManager = authenticationManager;
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.jwtGenerator = jwtGenerator;
     }
 
     @PostMapping("/register")
@@ -56,11 +60,11 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> login(@RequestBody LoginRequest loginRequest) {
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         Optional<Users> userOptional = userRepository.findByUsernameOrEmail(loginRequest.getUsernameOrEmail(), loginRequest.getUsernameOrEmail());
     
         if (userOptional.isEmpty()) {
-            return ResponseEntity.badRequest().body("Invalid credentials");
+            return new ResponseEntity<>("Invalid username, email or password.", HttpStatus.UNAUTHORIZED);
         }    
 
         Authentication authentication = authenticationManager.authenticate(
@@ -69,7 +73,9 @@ public class AuthController {
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        return new ResponseEntity<>("User login success!", HttpStatus.OK);
+        String token = jwtGenerator.generateToken(authentication);
+
+        return new ResponseEntity<>(new AuthResponseDTO(token), HttpStatus.OK);
     }
     
 }
