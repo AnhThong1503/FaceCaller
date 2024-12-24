@@ -4,6 +4,8 @@ import lombok.Data;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Data
 public class Messages {
@@ -13,10 +15,12 @@ public class Messages {
     private Long messageId;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "sender_id", nullable = false)
     private Users sender;
 
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "receiver_id")
     private Users receiver;
 

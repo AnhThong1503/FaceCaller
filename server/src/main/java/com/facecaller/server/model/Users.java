@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Data
 public class Users {
@@ -37,9 +39,11 @@ public class Users {
     @OneToMany(mappedBy = "createdBy")
     private Set<ChatRooms> createdChatRooms;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "sender")
     private Set<Messages> sentMessages;
 
+    @JsonManagedReference
     @OneToMany(mappedBy = "receiver")
     private Set<Messages> receivedMessages;
 
