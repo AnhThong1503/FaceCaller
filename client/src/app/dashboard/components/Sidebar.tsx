@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import Cookie from 'js-cookie';
 
-export function Sidebar() {
+export function Sidebar({ setSelectedChatName }: { setSelectedChatName: (name: string) => void }) {
     // Example state for rooms and friends
     const [rooms, setRooms] = useState([
         { id: 1, name: 'Room 1' },
@@ -56,6 +56,7 @@ export function Sidebar() {
                     <div className="border border-gray-700 rounded-lg p-2 space-y-2 min-h-64 max-h-64 overflow-y-auto">
                         {friends.map((friend) => (
                             <a
+                                onClick={() => setSelectedChatName(friend.name)}
                                 key={friend.id}
                                 href="#"
                                 className="nav-item flex justify-between py-2 px-4 border-b border-gray-600 last:border-0"
@@ -70,7 +71,7 @@ export function Sidebar() {
                         ))}
                     </div>
                     {/* Add Friend Button */}
-                    <button 
+                    <button
                         onClick={handleAddFriend}
                         className="mt-4 w-full py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-md"
                     >
@@ -87,6 +88,7 @@ export function Sidebar() {
                     <div className="border border-gray-700 rounded-lg p-2 space-y-2 min-h-64 max-h-64 overflow-y-auto">
                         {rooms.map((room) => (
                             <a
+                                onClick={() => setSelectedChatName(room.name)}
                                 key={room.id}
                                 href="#"
                                 className="nav-item flex justify-between py-2 px-4 border-b border-gray-600 last:border-0 items-center flex-col"
@@ -96,7 +98,7 @@ export function Sidebar() {
                         ))}
                     </div>
                     {/* Create Room Button */}
-                    <button 
+                    <button
                         onClick={handleCreateRoom}
                         className="mt-4 w-full py-2 px-4 bg-green-500 hover:bg-green-600 text-white rounded-md"
                     >
